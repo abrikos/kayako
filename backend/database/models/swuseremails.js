@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
+const md5 = require("md5");
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('swuseremails', {
+  const Model = sequelize.define('swuseremails', {
     useremailid: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -8,6 +9,11 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     linktype: {
+      type: DataTypes.SMALLINT,
+      allowNull: false,
+      defaultValue: 0
+    },
+    isAdmin: {
       type: DataTypes.SMALLINT,
       allowNull: false,
       defaultValue: 0
@@ -31,7 +37,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.SMALLINT,
       allowNull: false,
       defaultValue: 0
-    }
+    },
+    userpassword: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      defaultValue: "",
+      set(value) {
+        this.setDataValue('userpassword', md5(value));
+      }
+    },
   }, {
     sequelize,
     tableName: 'swuseremails',
@@ -79,4 +93,8 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
+  Model.prototype.checkPassword = function (password) {
+    return this.userpassword === md5(password)
+  };
+  return Model;
 };

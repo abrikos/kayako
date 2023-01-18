@@ -12,6 +12,16 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: "name"
     },
+    access_token: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: "access_token"
+    },
+    refresh_token: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: "refresh_token"
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: true,

@@ -13,6 +13,7 @@ export default {
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   router: {
+    middleware: ['auth'],
     extendRoutes(routes, resolve) {
       routes.push(
           {
@@ -98,8 +99,42 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/i18n',
+    '@nuxtjs/auth-next',
     'cookie-universal-nuxt',
   ],
+  auth:{
+    strategies: {
+      local: {
+        scheme: 'refresh',
+        token: {
+          property: 'access_token2222',
+          maxAge: 1800,
+          global: true,
+          // type: 'Bearer'
+        },
+        refreshToken: {
+          property: 'refresh_token3333',
+          data: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30
+        },
+        user: {
+          property: ''
+        },
+        endpoints: {
+          login: { url: '/auth/login', method: 'post' },
+          refresh: { url: '/auth/refresh', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/user', method: 'get' }
+        }
+      },
+    },
+    redirect: {
+      login: "/user/login",//this example of the path of login page in your project
+      logout: "/user/login", //this will redirect to your home after logout
+      home: "/cabinet/settings222", //this example will redirect to the path of user account page in your project.
+      callback: '/zzz/login',
+    }
+  },
   i18n: {
     locales: [
       {

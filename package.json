@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "front": "nuxt frontend",
+    "front": "nuxt frontend --port=4001",
     "backend": "node backend/server.js",
     "backend:dev": "nodemon backend/server.js",
     "mysql:init": "node backend/database/sync.js",
