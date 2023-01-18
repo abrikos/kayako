@@ -4,7 +4,7 @@ GIT=`git pull`
 if [[ $GIT =~ "Already" ]]; then
   echo $GIT
 else
-  yarn generate
+  npm run generate
   pm2 restart all
 fi
 #sleep 5
