@@ -43,7 +43,6 @@
             />
           </td>
           <td></td>
-          <td></td>
           <td>
             <v-radio-group
                 dense
@@ -86,8 +85,7 @@ export default {
       usersFound: [],
       headers: [
         {text: 'e-mail', value: 'email'},
-        {text: 'Зарегистрирован', value: 'date'},
-        {text: 'Последний вход', value: 'loggedDate'},
+        {text: 'Зарегистрирован', value: 'createdAt'},
         {text: '', value: 'controls'},
       ]
     }
