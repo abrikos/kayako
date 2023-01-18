@@ -118,7 +118,7 @@ module.exports = function (app) {
             where: {
                 [Op.and]: rules1
             },
-            logging: console.log
+            //logging: console.log
         })
     }
 

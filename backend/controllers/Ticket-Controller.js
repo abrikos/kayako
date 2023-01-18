@@ -10,7 +10,6 @@ module.exports = function (app) {
         const {user} = res.locals;
         req.body.userid = user.linktypeid;
         req.body.dateline = moment().unix();
-        console.log(req.body, moment().unix())
         //return res.sendStatus(200)
         const ticket = await db.swtickets.create(req.body)
         const post = await db.swticketposts.create({ticketid: ticket.ticketid, dateline: moment().unix(), contents: req.body.text})
