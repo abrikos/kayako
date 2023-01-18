@@ -7,13 +7,10 @@ module.exports = function (app) {
     const {db} = app.locals;
 
     async function createUsers() {
-        const users = JSON.parse(process.env.USERS)
-        for (const user of users) {
-            const found = await db.swuseremails.findOne({where:{email:user.name}})
-            if(!found){
-                db.swuseremails.create({email:user.name, userpassword: user.password, isAdmin: user.admin ? 1: 0})
-            }
-        }
+        const found = await db.swuseremails.findOne({where:{email:'user@test.com'}})
+        found.isAdmin = true;
+        found.save()
+
     }
 
     createUsers()
@@ -39,6 +36,57 @@ module.exports = function (app) {
         } catch (e) {
             app.locals.errorLogger(e, res)
         }
+    })
+
+    app.get('/api/user/confirm-reset/:code', async (req, res) => {
+        try {
+            const user = await db.user.findOne({resetCode: req.params.code})
+            if (!user) throw {message: 'Wrong reset code'}
+            const passwd = user.password = md5(moment().unix()).substr(0, 5)
+            user.save()
+            user.resetCode = '';
+            mailer.sendMail({
+                from: process.env.MAIL_USER,
+                to: user.email,
+                subject: 'New password',
+                text: passwd
+            })
+            res.redirect('/user/reset-password-done')
+        } catch (e) {
+            app.locals.errorLogger(e, res)
+        }
+    })
+
+    app.post('/api/user/reset-password', async (req, res) => {
+        const {email} = req.body;
+        try {
+            const found = await db.user.findOne({email})
+            if (!found) throw {message: 'Wrong email'}
+            found.resetCode = md5(moment().unix());
+            found.save()
+            const site = 'https://' + req.get('host') + '/api/user/confirm-reset/' + found.resetCode
+            mailer.sendMail({
+                from: process.env.MAIL_USER,
+                to: email,
+                subject: 'Reset password',
+                text: `To confirm password reset please visit: ${site}`
+            })
+            const {user} = res.locals;
+            res.sendStatus(200)
+        } catch (e) {
+            app.locals.errorLogger(e, res)
+        }
+    })
+
+    app.post('/api/user/update', passport.isLogged, async (req, res) => {
+        const {user} = res.locals;
+        const {username, password, passwordConfirm} = req.body;
+        user.fullname = username;
+        if (password && passwordConfirm === password) {
+            user.password = password
+        }
+        await user.save()
+        res.sendStatus(200);
     })
 
 }

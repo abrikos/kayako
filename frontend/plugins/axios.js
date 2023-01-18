@@ -8,20 +8,26 @@ export default function ({app, $axios, store}) {
 
   $axios.onError(error => {
     if (error.response) {
-      console.warn(error.response.data)
       if(error.response.status !== 401) {
-        console.log(error.response)
+        //console.log(error.response)
         try {
           error.response.data.status = error.response.status;
         }catch (e) {
           error.response.data = error.response
           error.response.data.message = error.response.request.responseText + ': ' + error.response.config.url + ' '
         }
-        store.commit('setSnackBar', error.response.data)
+        console.error(error.response.data)
+        if(error.response.status === 413){
+          store.commit('setSnackBar', {status: 413, message: 'Загружаемый файл превышает допустимый размер'})
+        }else{
+          store.commit('setSnackBar', error.response.data)
+        }
+
       }
-      return Promise.reject(error.response.data);
+
     }else{
-      console.error('NO error.response', error)
+      console.error('STRANGE error.response', error)
     }
+    return true;
   })
 }

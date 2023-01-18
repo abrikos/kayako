@@ -20,6 +20,7 @@
       <v-btn icon @click="switchTheme">
         <v-icon>mdi-theme-light-dark</v-icon>
       </v-btn>
+      <v-btn v-if="user && user.isAdmin" to="/admin/users">Admin</v-btn>
       <v-btn v-if="!user" to="/user/login">Вход</v-btn>
       <v-btn v-if="user" @click="logout">Выход</v-btn>
     </v-app-bar>

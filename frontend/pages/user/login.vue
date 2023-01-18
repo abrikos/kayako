@@ -25,6 +25,10 @@
 </template>
 
 <script>
+const login = window?.location.host === 'test.abrikos.pro' ? {
+  email: 'user@test.com',
+  password: '123',
+} : {}
 
 export default {
   name: "login",
@@ -36,10 +40,7 @@ export default {
         value => !!value || this.$t('Required'),
         //value => (value && value.length >= 3) || 'Min 3 characters',
       ],
-      login: {
-        email: '',
-        password: '',
-      }
+      login
     }
   },
   computed: {

@@ -33,10 +33,19 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       defaultValue: ""
     },
+    blocked: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
+    },
     isprimary: {
       type: DataTypes.SMALLINT,
       allowNull: false,
       defaultValue: 0
+    },
+    createdAt: {
+      type: 'TIMESTAMP',
+      allowNull: false,
     },
     userpassword: {
       type: DataTypes.STRING(50),
