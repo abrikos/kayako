@@ -46,7 +46,6 @@ const methods = {
         if (!req.cookies[accessTokenName]) return console.log('No token');
         const access_token = req.cookies[accessTokenName].replace('Bearer ','');
         const token = await res.locals.db.tokens.findOne({where:{access_token}, include:[{model: res.locals.db.swuseremails}]})
-        console.log(token)
         if (!token) return
         return token.swuseremail;
     },
