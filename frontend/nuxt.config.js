@@ -34,12 +34,12 @@ export default {
           {
             name: 'search',
             path: '/search/*',
-            component: resolve(__dirname, 'pages/index.vue'),
+            component: resolve(__dirname, 'pages/search.vue'),
           },
           {
             name: 'search',
             path: '/search',
-            component: resolve(__dirname, 'pages/index.vue'),
+            component: resolve(__dirname, 'pages/search.vue'),
           },
       )
     }
