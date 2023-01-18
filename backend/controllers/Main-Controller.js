@@ -80,11 +80,6 @@ module.exports = function (app) {
         console.timeEnd('search')
     })
 
-    /*search({text: '1zzzz', email: '22', department: 'net'})
-        .then(list => {
-            console.log(list.length)
-        })*/
-
     async function search2({model, ticketid, text, email, department, textAttach}) {
         const rules1 = []
         const include = []
