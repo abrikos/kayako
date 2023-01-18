@@ -34,22 +34,5 @@ module.exports = {
         //error_file: `${__dirname}/logs/server.err.log`,
         //out_file:   `${__dirname}/logs/server.out.log`,
         //pid_file:   `${__dirname}/logs/server.pid`,
-    },{
-        name: `${pkginfo.name}-frontend`,
-        script: 'npm run front',
-        //node_args: '--preserve-symlinks -r esm',
-        env: {
-            NODE_ENV: 'production',
-            SOURCE_MAP: 'source-map',
-            NODE_PATH: '.',
-            //DEBUG: '*',
-        },
-        output: 'logs/frontend.log',
-        error: 'logs/frontend-error.log',
-        //log_date_format,
-        //combine_logs,
-        //error_file: `${__dirname}/logs/server.err.log`,
-        //out_file:   `${__dirname}/logs/server.out.log`,
-        //pid_file:   `${__dirname}/logs/server.pid`,
     }]
 };
