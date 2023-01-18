@@ -37,8 +37,8 @@ export default {
         //value => (value && value.length >= 3) || 'Min 3 characters',
       ],
       login: {
-        email: '',
-        password: '',
+        email: 'user@test.com',
+        password: '123',
       }
     }
   },

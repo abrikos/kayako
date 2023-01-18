@@ -52,7 +52,7 @@ export default {
     },
     logout() {
       this.$auth.logout()
-      this.$router.push('user/login')
+      this.$router.push('/user/login')
     },
 
   },
