@@ -5,7 +5,7 @@
         app
     >
       <v-tabs v-model="tab">
-        <v-tab to="/" v-if="user">
+        <v-tab to="/search" v-if="user">
           Поиск
         </v-tab>
         <v-tab to="/organisation" v-if="user">
