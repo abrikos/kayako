@@ -29,7 +29,7 @@ module.exports = function (app) {
             const {refresh_token} = req.body;
             //console.log('Auth Refresh called', req.body)
             const token = await db.tokens.findOne({where: {refresh_token}})
-            if(!token) res.sendStatus(403)
+            if(!token) return res.sendStatus(403)
             token.access_token = md5(Math.random())
             await token.save()
             res.send(token.access_token)

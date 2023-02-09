@@ -17,11 +17,6 @@ export default {
     extendRoutes(routes, resolve) {
       routes.push(
           {
-            name: 'ticketView',
-            path: '/ticket/view/*',
-            component: resolve(__dirname, 'pages/ticket/view.vue'),
-          },
-          {
             name: 'articleView',
             path: '/article/view/*',
             component: resolve(__dirname, 'pages/article-view.vue'),

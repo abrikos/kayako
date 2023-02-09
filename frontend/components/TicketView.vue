@@ -51,22 +51,8 @@ import moment from "moment"
 
 export default {
   name: "TicketView",
-  data() {
-    return {
-      ticket: null
-    }
-  },
-  created() {
-    this.$axios.$get('/ticket/view/' + this.id)
-        .then(data => {
-          this.ticket = data;
-        })
-  },
-  computed: {
-    id() {
-      return this.$route.params.pathMatch;
-    }
-  },
+  props:['ticket'],
+
   methods: {
     saveFile(url, filename) {
       const xhr = new XMLHttpRequest();

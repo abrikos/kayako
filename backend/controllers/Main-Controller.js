@@ -33,16 +33,6 @@ module.exports = function (app) {
             })
     })
 
-    app.get('/api/ticket/users/:id', (req, res) => {
-        db.swtickets.findAll({
-            attributes: ['ticketid', 'departmenttitle', 'email', 'subject', 'fullname', 'dateline', 'ownerstaffname'],
-            where: {userid: req.params.id},
-        })
-            .then(list => {
-                res.send(list)
-            })
-    })
-
     app.get('/api/article/list', (req, res) => {
         db.swkbarticles.findAll({
             attributes: ['kbarticleid', 'subject', 'dateline', 'views'],
@@ -62,16 +52,6 @@ module.exports = function (app) {
             .then(list => {
                 res.send(list)
             })
-    })
-
-    app.get('/api/ticket/organisation/:id', async (req, res) => {
-        const users = await db.swusers.findAll({attributes: ['userid'], where: {userorganizationid: req.params.id}})
-        const list = await db.swtickets.findAll({
-            attributes: ['ticketid', 'departmenttitle', 'email', 'subject', 'fullname', 'dateline', 'ownerstaffname'],
-            where: {userid: {[Op.in]: users.map(d => d.userid)}},
-        })
-        res.send(list)
-
     })
 
     app.post('/api/search', async (req, res) => {
@@ -118,28 +98,5 @@ module.exports = function (app) {
         })
     }
 
-    app.get('/api/ticket/view/:id', async (req, res) => {
-        const {user} = res.locals;
-        const ticket = await db.swtickets.findByPk(req.params.id, {
-            include: [
-                {model: db.swticketposts, include: [{model: db.swusers}]},
-                {model: db.swdepartments},
-                {model: db.swattachments},
-                {model: db.swtickettypes},
-                {
-                    model: db.swcustomfieldvalues,
-                    attributes: ['fieldvalue'],
-                    where: {customfieldid: 12},
-                    required: false
-                },
-                {model: db.swticketstatus},
-                {model: db.swticketpriorities},
-                {model: db.swusers}
-            ],
-            order: [
-                [db.swticketposts, 'dateline', 'ASC']
-            ]
-        })
-        res.send(ticket)
-    })
+
 }
