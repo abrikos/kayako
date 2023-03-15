@@ -45,6 +45,8 @@ module.exports = function (app) {
     app.post('/api/admin/user/create', async (req, res) => {
         try {
             const {email, password} = req.body
+            const found = await db.swuseremails.findOne({email})
+            if(found) throw {error: 406, message: 'User exists'}
             console.log(email, password)
             const user = await db.swuseremails.create({email, userpassword:password, createdAt:moment().format('YYYY-MM-DD HH:mm')})
             res.sendStatus(200);
