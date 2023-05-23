@@ -46,7 +46,6 @@ module.exports = function (app) {
         try {
             const {email, password} = req.body
             const found = await db.swuseremails.findOne({where: {email}})
-            console.log(found)
             if(found) throw {error: 406, message: 'User exists'}
             console.log(email, password)
             const user = await db.swuseremails.create({email, userpassword:password, createdAt:moment().format('YYYY-MM-DD HH:mm')})
