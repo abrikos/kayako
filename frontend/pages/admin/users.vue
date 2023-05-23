@@ -93,7 +93,7 @@ export default {
   computed:{
     users(){
       return this.usersFound
-          .filter(u=>u.email ? u.email.match(this.filter) : true)
+          .filter(u=>u.email ? u.email.toLowerCase().match(this.filter.toLowerCase()) : true)
           .filter(u=>this.userFilter ==='all' ? true : this.userFilter==='admin' ? u.isAdmin : this.userFilter==='blocked' ? u.blocked : !u.blocked )
     }
   },
